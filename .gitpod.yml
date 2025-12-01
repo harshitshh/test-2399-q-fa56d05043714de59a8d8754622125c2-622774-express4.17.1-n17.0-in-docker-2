@@ -1,0 +1,27 @@
+tasks:
+  - name: Terminal 1
+    openMode: split-left
+    before: |
+      wget -qOdatabase-setup.sh https://codejudge-starter-repo-artifacts.s3.ap-south-1.amazonaws.com/gitpod/env-setup-backend.sh 
+      chmod 0755 database-setup.sh
+      bash database-setup.sh node 17.0.0
+  - name: Terminal 2
+    openMode: split-right
+    command: |
+          gp ports await 8080
+          wget -qOverify_connection_url.sh https://codejudge-starter-repo-artifacts.s3.ap-south-1.amazonaws.com/gitpod/verify_connection_url.sh
+          chmod 0755 verify_connection_url.sh
+          bash verify_connection_url.sh 8080 BACKEND_MICRO_PROJECT && exit
+ports:
+  - port: 8080
+    name: "Backend Server"
+    onOpen: open-preview
+    visibility: public
+  - port: 3306
+    name: "MySQL Server"
+    onOpen: ignore
+    visibility: public
+  - port: 27017
+    name: "MongoDB Server"
+    onOpen: ignore
+    visibility: public
